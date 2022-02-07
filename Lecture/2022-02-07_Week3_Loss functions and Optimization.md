@@ -4,23 +4,23 @@
 
 모델의 성능을 나타내는데 사용되는 함수. 손실 함수는 모델 성능의 ‘나쁨’을 나타내는 지표이다. 손실 함수 값이 클 수록 모델의 성능이 낮음을 의미한다. 따라서 손실 함수의 값이 작아지도록 모델을 학습해야 한다.
 
-data set: $\{(x_i,~y_i)\}_{i=1}^N$  ($x$: 입력 데이터, $y$: $x$ 에 대한 레이블).
+data set: ![](https://latex.codecogs.com/svg.image?%5C%7B(x_i,~y_i)%5C%7D_%7Bi=1%7D%5EN)  (![](https://latex.codecogs.com/svg.image?x): 입력 데이터, ![](https://latex.codecogs.com/svg.image?y): ![](https://latex.codecogs.com/svg.image?x) 에 대한 레이블).
 
-loss function: $L_i$
+loss function: ![](https://latex.codecogs.com/svg.image?L_i)
 
-loss: $L = \frac{1}{N}\sum_{i=1}^N L_i(f(x_i, ~W), ~y_i)$   ($W$: 파라미터, $f$: prediction function)
+loss: ![](https://latex.codecogs.com/svg.image?L&space;=&space;\frac{1}{N}\sum_{i=1}^N&space;L_i(f(x_i,&space;~W),&space;~y_i))   (![](https://latex.codecogs.com/svg.image?W): 파라미터, ![](https://latex.codecogs.com/svg.image?f): prediction function)
 
-$x$ 와 $W$ 를 통해 얻은 예측값과, 실제 정답인 $y$ 를 가지고서 손실값을 구한다. 이를 모든 데이터에 대해 반복한 후 평균을 낸 것이 loss 이며, 모델의 성능을 나타내는 지표다.
+![](https://latex.codecogs.com/svg.image?x) 와 ![](https://latex.codecogs.com/svg.image?W) 를 통해 얻은 예측값과, 실제 정답인 ![](https://latex.codecogs.com/svg.image?y) 를 가지고서 손실값을 구한다. 이를 모든 데이터에 대해 반복한 후 평균을 낸 것이 loss 이며, 모델의 성능을 나타내는 지표다.
 
 ### 1. **Multi-Class SVM Loss**
 
-$(x_i, ~y_i)$ 에 대해($x$ 는 사진 데이터, $y$ 는 정수(레이블)), prediction function 을 통해 얻은 예측값을 $s$ 라고 하자. 이때 $s$ 는 각 class 에 대한 예측값을 가지고 있는 vector 이다. $s_j$ 는 $j$ 번째 class 에 대한 점수고, 특히 $s_{y_i}$ 는 정답 class 에 대한 점수다. 이때, multi-class SVM loss function 은 다음과 같다. 
+![](https://latex.codecogs.com/svg.image?(x_i,%20~y_i)) 에 대해(![](https://latex.codecogs.com/svg.image?x) 는 사진 데이터, ![](https://latex.codecogs.com/svg.image?y) 는 정수(레이블)), prediction function 을 통해 얻은 예측값을 ![](https://latex.codecogs.com/svg.image?s) 라고 하자. 이때 ![](https://latex.codecogs.com/svg.image?s) 는 각 class 에 대한 예측값을 가지고 있는 vector 이다. ![](https://latex.codecogs.com/svg.image?s_j) 는 ![](https://latex.codecogs.com/svg.image?j) 번째 class 에 대한 점수고, 특히 ![](https://latex.codecogs.com/svg.image?s_{y_i}) 는 정답 class 에 대한 점수다. 이때, multi-class SVM loss function 은 다음과 같다. 
 
-$L_i = \sum_{j \ne y_i} max(0, ~s_j-s_{y_i} + 1)$
+![](https://latex.codecogs.com/svg.image?L_i%20=%20%5Csum_%7Bj%20%5Cne%20y_i%7D%20max(0,%20~s_j-s_%7By_i%7D%20&plus;%201))
 
-만약 정답 class 에 대한 예측 값($s_{y_i}$)이 오답 class 에 대한 예측값($s_j$)에 1을 더한 것 보다 더 크면, $\sum$ 안에 있는 term 은 0이 된다. 다시 말해, 정답 class 에 대한 예측을 오답 class 들에 대한 예측에 비해서 더 잘했다면(여기서는 1보다 더 잘했다면), loss 를 0으로 간주한다는 것이다.
+만약 정답 class 에 대한 예측 값![](https://latex.codecogs.com/svg.image?s_{y_i}))이 오답 class 에 대한 예측값![](https://latex.codecogs.com/svg.image?s_j)에 1을 더한 것 보다 더 크면, ![](https://latex.codecogs.com/svg.image?\sum) 안에 있는 term 은 0이 된다. 다시 말해, 정답 class 에 대한 예측을 오답 class 들에 대한 예측에 비해서 더 잘했다면(여기서는 1보다 더 잘했다면), loss 를 0으로 간주한다는 것이다.
 
-![Untitled](3%E1%84%8C%E1%85%AE%E1%84%8E%E1%85%A1%20Loss%20Functions%20and%20Optimization%204f3e58b18f57425d9450490abe352a81/Untitled.png)
+![Untitled](https://www.notion.so/3-Loss-Functions-and-Optimization-28a851d214ad4a5c97b7bfa6f7070cb4#4f3e58b18f57425d9450490abe352a81)
 
 그림 상의 그래프에서 x 축은 정답 클래스의 예측값($s_{y_i}$)이고, y 축은 loss 이다. 그래프의 모양때문에 multi-class SVM loss 를 hinge loss 라고도 한다. 정답 클래스의 예측값이 나머지 예측값($s_j$)들에 비해 1이 크면 loss 는 0이 된다.
 
